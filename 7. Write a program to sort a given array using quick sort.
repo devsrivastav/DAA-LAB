@@ -1,0 +1,67 @@
+#include <stdio.h>
+
+// Function to swap two elements
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Partition function for Quick Sort
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high]; // choosing the last element as pivot
+    int i = (low - 1); // index of smaller element
+
+    for (int j = low; j < high; j++) {
+        // If current element is smaller than or equal to pivot
+        if (arr[j] <= pivot) {
+            i++; // increment index of smaller element
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]); // swap the pivot element with the element at i+1
+    return (i + 1);
+}
+
+// Quick Sort function
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high); // pi is partitioning index
+        quickSort(arr, low, pi - 1); // Before pi
+        quickSort(arr, pi + 1, high); // After pi
+    }
+}
+
+int main() {
+    int N;
+
+    // Input size of the array
+    printf("Enter the no of elements: ");
+    scanf("%d", &N);
+
+    // Check if N is within constraints
+    if (N < 1 || N > 1000) {
+        printf("N must be between 1 and 1000.\n");
+        return 1;
+    }
+
+    int arr[N];
+
+    // Input array elements
+    printf("Enter numbers to be sorted: ");
+    for (int i = 0; i < N; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    // Apply quick sort
+    quickSort(arr, 0, N - 1);
+
+    // Output the sorted array
+    printf("Sorted array is: ");
+    for (int i = 0; i < N; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
